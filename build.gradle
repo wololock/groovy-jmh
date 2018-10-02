@@ -26,8 +26,10 @@ dependencies {
 jmh {
     include = ['bench\\.*']
     benchmarkMode = ['avgt']
-    timeUnit = 'ns'
-    warmup = '20s'
+    timeUnit = 'ms'
+    iterations = 120
+    timeOnIteration = '1s'
+    warmup = '60s'
     warmupIterations = 1
     batchSize = 1
     fork = 1

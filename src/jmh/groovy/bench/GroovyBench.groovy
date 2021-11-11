@@ -11,62 +11,40 @@ import java.util.function.Consumer
 
 @State(Scope.Benchmark)
 @CompileStatic
-@TypeChecked
 class GroovyBench {
 
-    final List<Integer> numbers = 0..10_000_000 //<1>
-
     @Benchmark
-    AtomicLong eachTest() { //<2>
-        final AtomicLong result = new AtomicLong()
-        numbers.each { result.addAndGet(it) }
-        return result
+    void eachTest() { //<2>
+        new GroovyLoops().eachTest()
     }
 
     @Benchmark
-    AtomicLong forEachTest() { //<3>
-        final AtomicLong result = new AtomicLong()
-        for (int number : numbers) {
-            result.addAndGet(number)
-        }
-        return result
+    void forEachTest() { //<3>
+        new GroovyLoops().forEachTest()
     }
 
     @Benchmark
     AtomicLong forLoopTest() { //<4>
-        final AtomicLong result = new AtomicLong()
-        for (int i = 0; i < numbers.size(); i++) {
-            result.addAndGet(numbers.get(i))
-        }
-        return result
+        return new GroovyLoops().forLoopTest()
     }
 
     @Benchmark
     AtomicLong iteratorTest() { //<5>
-        final AtomicLong result = new AtomicLong()
-        final Iterator<Integer> iterator = numbers.iterator()
-        while (iterator.hasNext()) {
-            result.addAndGet(iterator.next())
-        }
-        return result
+        return new GroovyLoops().iteratorTest()
     }
 
     @Benchmark
-    AtomicLong java8ForEachWithClosureTest() { //<6>
-        final AtomicLong result = new AtomicLong()
-        numbers.forEach { result.addAndGet((int) it) }
-        return result
+    AtomicLong java8ForEachWithCastClosureTest() { //<6>
+        return new GroovyLoops().java8ForEachWithCastClosureTest()
     }
 
     @Benchmark
     AtomicLong java8ForEachWithAnonymousClassTest() { //<7>
-        final AtomicLong result = new AtomicLong()
-        numbers.forEach(new Consumer<Integer>() {
-            @Override
-            void accept(Integer number) {
-                result.addAndGet(number)
-            }
-        })
-        return result
+        return new GroovyLoops().java8ForEachWithAnonymousClassTest()
+    }
+
+    @Benchmark
+    AtomicLong java8ForEachWithClosureTest() { //<6>
+        return new GroovyLoops().java8ForEachWithClosureTest()
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
  */
 public class DataJava {
 
-    public static final List<Integer> numbers = IntStream.range(0, 10_000_00)
+    public static final List<Integer> numbers = IntStream.range(0, 10_000_000)
             .boxed()
             .collect(Collectors.toList());
 

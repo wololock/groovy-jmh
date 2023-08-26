@@ -19,12 +19,17 @@ public class JavaBench {
     }
 
     @Benchmark
-    public void javaForLoop() {
-        new JavaLoops().javaForLoop();
+    public void javaForLoopClassic() {
+        new JavaLoops().forLoopClassic();
     }
 
-    @Benchmark
-    public void javaIteratorTest() {
-        new JavaLoops().javaIteratorTest();
-    }
+    // @Benchmark
+    // public void javaForLoop() {
+    //     new JavaLoops().javaForLoop();
+    // }
+    //
+    // @Benchmark
+    // public void javaIteratorTest() {
+    //     new JavaLoops().javaIteratorTest();
+    // }
 }

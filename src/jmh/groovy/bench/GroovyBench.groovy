@@ -13,38 +13,53 @@ import java.util.function.Consumer
 @CompileStatic
 class GroovyBench {
 
+    //final List<Integer> numbers = DataJava.numbers
+    final List<Integer> numbers = 0..10_000_000
+
+    //
     @Benchmark
-    void eachTest() { //<2>
-        new GroovyLoops().eachTest()
+    AtomicLong forLoopClassic() { //<4>
+        return new GroovyLoops().forLoopClassic()
     }
 
     @Benchmark
-    void forEachTest() { //<3>
+    void groovyEach() { //<2>
+        new GroovyLoops().groovyEachTest(numbers)
+    }
+
+    @Benchmark
+    void forEachClassic() { //<3>
         new GroovyLoops().forEachTest()
     }
 
+    //lambda in groovy just as fast
     @Benchmark
-    AtomicLong forLoopTest() { //<4>
-        return new GroovyLoops().forLoopTest()
+    AtomicLong forEachLambda() { //<6>
+        return new GroovyLoops().forEachLambda()
     }
 
+    //3X slower
     @Benchmark
-    AtomicLong iteratorTest() { //<5>
-        return new GroovyLoops().iteratorTest()
+    AtomicLong forEachWithClosure() { //<6>
+        return new GroovyLoops().forEachWithClosureTest()
     }
 
-    @Benchmark
-    AtomicLong java8ForEachWithCastClosureTest() { //<6>
-        return new GroovyLoops().java8ForEachWithCastClosureTest()
-    }
+    //3X slower and more, almost makes it worse for some reason
+    // @Benchmark
+    // AtomicLong forEachWithCastClosureTest() { //<6>
+    //     return new GroovyLoops().forEachWithCastClosureTest()
+    // }
 
-    @Benchmark
-    AtomicLong java8ForEachWithAnonymousClassTest() { //<7>
-        return new GroovyLoops().java8ForEachWithAnonymousClassTest()
-    }
+    // here as another baseline, just as fast as java or lambda.
+    // @Benchmark
+    // AtomicLong forEachWithAnonymousClassTest() { //<7>
+    //     return new GroovyLoops().forEachWithAnonymousClassTest()
+    // }
 
-    @Benchmark
-    AtomicLong java8ForEachWithClosureTest() { //<6>
-        return new GroovyLoops().java8ForEachWithClosureTest()
-    }
+    //
+    // @Benchmark
+    // AtomicLong iteratorTest() { //<5>
+    //     return new GroovyLoops().iteratorTest()
+    // }
+
 }
